@@ -3,7 +3,7 @@
 @import "tailwindcss";
 
 @theme {
-  --color-primary: #5f6fff;
+  --color-primary: #7986ff;
 }
 
 *{
@@ -13,11 +13,6 @@
 .active hr {
   @apply block;
 }
-
-:root {
-  --color-primary: #5f6fff;
-}
-
 ::-webkit-scrollbar{
   @apply hidden;
 }
