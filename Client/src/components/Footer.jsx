@@ -54,7 +54,7 @@ const Footer = () => {
       {/* Bottom */}
       <div className="border-t border-gray-300 mt-14">
         <p className="py-6 text-sm text-center text-gray-600">
-          © {new Date().getFullYear()} ElyséeDev — All Rights Reserved.
+          © {new Date().getFullYear()} PrescriptoDev — All Rights Reserved.
         </p>
       </div>
     </footer>
