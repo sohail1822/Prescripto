@@ -1,7 +1,11 @@
 import React from "react";
 import { assets } from "../assets/assets";
+import { useNavigate } from "react-router-dom";
+
 
 const Footer = () => {
+
+  const navigate = useNavigate();
   return (
     <footer className="mt-40 bg-gradient-to-b from-blue-50 to-blue-100 pt-20 pb-10 px-6 md:px-12 rounded-t-3xl">
       <div className="max-w-6xl mx-auto grid grid-cols-1 sm:grid-cols-[2fr_1fr_1fr] gap-16 text-sm">
@@ -20,13 +24,13 @@ const Footer = () => {
         <div>
           <h3 className="text-xl font-semibold mb-5 text-gray-900">Company</h3>
           <ul className="flex flex-col gap-3 text-gray-700">
-            <li className="cursor-pointer hover:text-gray-900 transition">
+            <li onClick={() => { navigate('/'); scrollTo(0, 0); }} className="cursor-pointer hover:text-gray-900 transition">
               Home
             </li>
-            <li className="cursor-pointer hover:text-gray-900 transition">
+            <li onClick={() => { navigate('/about'); scrollTo(0, 0); }} className="cursor-pointer hover:text-gray-900 transition">
               About Us
             </li>
-            <li className="cursor-pointer hover:text-gray-900 transition">
+            <li onClick={() => { navigate('/contact'); scrollTo(0, 0); }} className="cursor-pointer hover:text-gray-900 transition">
               Contact Us
             </li>
             <li className="cursor-pointer hover:text-gray-900 transition">
@@ -45,7 +49,7 @@ const Footer = () => {
               +250-784-652-570
             </li>
             <li className="cursor-pointer hover:text-gray-900 transition">
-              gyanendrakumar3555@gmail.com
+              prescriptodevlabs@gmail.com
             </li>
           </ul>
         </div>
@@ -54,7 +58,7 @@ const Footer = () => {
       {/* Bottom */}
       <div className="border-t border-gray-300 mt-14">
         <p className="py-6 text-sm text-center text-gray-600">
-          © {new Date().getFullYear()} PrescriptoDev — All Rights Reserved.
+          © {new Date().getFullYear()} PrescriptoDevLabs — All Rights Reserved.
         </p>
       </div>
     </footer>
