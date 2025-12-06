@@ -296,4 +296,20 @@ export const doctors = [
             line2: 'Circle, Ring Road, London'
         }
     },
+
+    {
+        _id: 'doc16',
+        name: 'Dr. Michael Brown',
+        image: doc10,
+        speciality: 'Gastroenterologist',
+        degree: 'MBBS',
+        experience: '5 Years',
+        about: 'Specialist in digestive system disorders.',
+        fees: 70,
+        address: {
+            line1: '33rd Cross, Richmond',
+            line2: 'Circle, Ring Road, London'
+        }
+    }
+
 ]
