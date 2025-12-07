@@ -11,7 +11,10 @@ node_modules
 dist
 dist-ssr
 *.local
-.env
+14:     .env
+15:     seeds/
+
+mcpconfig.json
 
 # Editor directories and files
 .vscode/*
@@ -23,3 +26,6 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Test files
+tests/

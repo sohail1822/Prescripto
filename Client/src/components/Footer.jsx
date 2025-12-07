@@ -1,67 +1,50 @@
 import React from "react";
 import { assets } from "../assets/assets";
-import { useNavigate } from "react-router-dom";
-
 
 const Footer = () => {
-
-  const navigate = useNavigate();
   return (
-    <footer className="mt-40 bg-gradient-to-b from-blue-50 to-blue-100 pt-20 pb-10 px-6 md:px-12 rounded-t-3xl">
-      <div className="max-w-6xl mx-auto grid grid-cols-1 sm:grid-cols-[2fr_1fr_1fr] gap-16 text-sm">
-        {/* Left */}
+    <div className="md:mx-10">
+      <div className="flex flex-col sm:grid grid-cols-[3fr_1fr_1fr] gap-14 my-10 mt-40 text-sm">
+        {/* ------------ Left Section ------------ */}
         <div>
-          <img className="mb-6 w-44" src={assets.logo} alt="Logo" />
-
-          <p className="w-full md:w-3/4 text-gray-700 leading-7">
-            Delivering seamless digital experiences through clean interfaces,
-            modern engineering practices, and reliable technology that grows
-            with your vision.
+          <img className="mb-5 w-40" src={assets.logo} alt="" />
+          <p className="w-full md:w-2/3 text-gray-600 leading-6">
+            Lorem Ipsum is simply dummy text of the printing and typesetting
+            industry. Lorem Ipsum has been the industry's standard dummy text
+            ever since the 1500s, when an unknown printer took a galley of type
+            and scrambled it to make a type specimen book.
           </p>
         </div>
 
-        {/* Company */}
+        {/* ------------ Center Section ------------ */}
         <div>
-          <h3 className="text-xl font-semibold mb-5 text-gray-900">Company</h3>
-          <ul className="flex flex-col gap-3 text-gray-700">
-            <li onClick={() => { navigate('/'); scrollTo(0, 0); }} className="cursor-pointer hover:text-gray-900 transition">
-              Home
-            </li>
-            <li onClick={() => { navigate('/about'); scrollTo(0, 0); }} className="cursor-pointer hover:text-gray-900 transition">
-              About Us
-            </li>
-            <li onClick={() => { navigate('/contact'); scrollTo(0, 0); }} className="cursor-pointer hover:text-gray-900 transition">
-              Contact Us
-            </li>
-            <li className="cursor-pointer hover:text-gray-900 transition">
-              Privacy Policy
-            </li>
+          <p className="text-xl font-medium mb-5">COMPANY</p>
+          <ul className="flex flex-col gap-2 text-gray-600">
+            <li>Home</li>
+            <li>About us</li>
+            <li>Contact us</li>
+            <li>Privacy policy</li>
           </ul>
         </div>
 
-        {/* Contact */}
+        {/* ------------ Right Section ------------ */}
         <div>
-          <h3 className="text-xl font-semibold mb-5 text-gray-900">
-            Get in Touch
-          </h3>
-          <ul className="flex flex-col gap-3 text-gray-700">
-            <li className="cursor-pointer hover:text-gray-900 transition">
-              +250-784-652-570
-            </li>
-            <li className="cursor-pointer hover:text-gray-900 transition">
-              prescriptodevlabs@gmail.com
-            </li>
+          <p className="text-xl font-medium mb-5">GET IN TOUCH</p>
+          <ul className="flex flex-col gap-2 text-gray-600">
+            <li>+250-784-652-570</li>
+            <li>elyseniyibizi502@gmail.com</li>
           </ul>
         </div>
       </div>
 
-      {/* Bottom */}
-      <div className="border-t border-gray-300 mt-14">
-        <p className="py-6 text-sm text-center text-gray-600">
-          © {new Date().getFullYear()} PrescriptoDevLabs — All Rights Reserved.
+      {/* ------------ Copyright Text ------------ */}
+      <div>
+        <hr />
+        <p className="py-5 text-sm text-center">
+          Copyright © 2024 ElyséeDev - All Right Reserved
         </p>
       </div>
-    </footer>
+    </div>
   );
 };
 
