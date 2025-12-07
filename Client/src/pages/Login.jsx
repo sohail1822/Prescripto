@@ -1,42 +1,90 @@
-import React, { useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
+import { AppContext } from "../context/AppContext";
+import axios from "axios";
+import { toast } from "react-toastify";
+import { useNavigate, useLocation } from "react-router-dom";
 
 const Login = () => {
-  const [state, setState] = useState("Sign Up");
+  const { backendUrl, token, setToken } = useContext(AppContext);
+  const navigate = useNavigate();
+  const location = useLocation();
 
+  const [mode, setMode] = useState("signup"); // signup | login
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [name, setName] = useState("");
 
-  const onSubmitHandler = async (event) => {
-    event.preventDefault();
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    try {
+      if (mode === "signup") {
+        const { data } = await axios.post(`${backendUrl}/api/user/register`, {
+          name,
+          email,
+          password,
+        });
+
+        if (data.success) {
+          localStorage.setItem("token", data.token);
+          setToken(data.token);
+          toast.success("Account created");
+        } else {
+          return toast.error(data.message);
+        }
+      } else {
+        const { data } = await axios.post(`${backendUrl}/api/user/login`, {
+          email,
+          password,
+        });
+
+        if (data.success) {
+          localStorage.setItem("token", data.token);
+          setToken(data.token);
+          toast.success("Logged in");
+        } else {
+          return toast.error(data.message);
+        }
+      }
+    } catch (err) {
+      toast.error(err.message);
+    }
   };
+
+  // Redirect if already logged in
+  useEffect(() => {
+    if (token && token !== "null") {
+      navigate("/");
+    }
+  }, [token]);
+
+  // Reset mode when navigating to this page
+  useEffect(() => {
+    setMode("signup");
+    setEmail("");
+    setPassword("");
+    setName("");
+  }, [location]);
 
   return (
     <form
-      onSubmit={onSubmitHandler}
-      className="min-h-[80vh] flex items-center justify-center px-4"
+      onSubmit={handleSubmit}
+      className="min-h-[80vh] flex items-center justify-center"
     >
-      <div className="flex flex-col gap-5 w-full max-w-md bg-white p-10 border rounded-xl shadow-md text-zinc-700">
-        {/* Title */}
-        <div>
-          <p className="text-3xl font-semibold text-gray-800">
-            {state === "Sign Up" ? "Create Account" : "Login"}
-          </p>
-          <p className="text-sm mt-1 text-gray-600">
-            Please {state === "Sign Up" ? "Sign Up" : "Log in"} to continue.
-          </p>
-        </div>
+      <div className="flex flex-col gap-3 p-8 min-w-[340px] sm:min-w-96 border rounded-xl text-zinc-600 text-sm shadow-lg">
+        <p className="text-2xl font-semibold">
+          {mode === "signup" ? "Create Account" : "Login"}
+        </p>
+        <p>
+          Please {mode === "signup" ? "sign up" : "log in"} to book appointment
+        </p>
 
-        {/* Full Name */}
-        {state === "Sign Up" && (
+        {mode === "signup" && (
           <div className="w-full">
-            <label className="font-medium">
-              Full Name <span className="text-red-600">*</span>
-            </label>
+            <p>Full Name</p>
             <input
-              className="border border-zinc-300 rounded-md w-full p-2 mt-1 focus:border-primary focus:ring-1 focus:ring-primary outline-none"
+              className="border border-zinc-300 rounded w-full p-2 mt-1"
               type="text"
-              placeholder="Enter your full name"
               onChange={(e) => setName(e.target.value)}
               value={name}
               required
@@ -44,65 +92,56 @@ const Login = () => {
           </div>
         )}
 
-        {/* Email */}
         <div className="w-full">
-          <label className="font-medium">
-            Email <span className="text-red-600">*</span>
-          </label>
+          <p>Email</p>
           <input
-            className="border border-zinc-300 rounded-md w-full p-2 mt-1 focus:border-primary focus:ring-1 focus:ring-primary outline-none"
+            className="border border-zinc-300 rounded w-full p-2 mt-1"
             type="email"
-            placeholder="example@mail.com"
             onChange={(e) => setEmail(e.target.value)}
             value={email}
             required
           />
         </div>
 
-        {/* Password */}
         <div className="w-full">
-          <label className="font-medium">
-            Password <span className="text-red-600">*</span>
-          </label>
+          <p>Password</p>
           <input
-            className="border border-zinc-300 rounded-md w-full p-2 mt-1 focus:border-primary focus:ring-1 focus:ring-primary outline-none"
+            className="border border-zinc-300 rounded w-full p-2 mt-1"
             type="password"
-            placeholder="Enter your password"
             onChange={(e) => setPassword(e.target.value)}
             value={password}
             required
           />
         </div>
 
-        {/* Submit */}
-        <button className="bg-primary hover:bg-primary/90 text-white w-full py-2.5 rounded-md text-base font-medium transition-all duration-300">
-          {state === "Sign Up" ? "Create Account" : "Login"}
+        <button
+          type="submit"
+          className="bg-primary text-white w-full py-2 rounded-md text-base"
+        >
+          {mode === "signup" ? "Create Account" : "Login"}
         </button>
 
-        {/* Switch State */}
-        <p className="text-sm text-gray-600 mt-1">
-          {state === "Sign Up" ? (
-            <>
-              Already have an account?{" "}
-              <span
-                onClick={() => setState("Login")}
-                className="text-primary underline cursor-pointer"
-              >
-                Login here
-              </span>
-            </>
-          ) : (
-            <>
-              Create a new account?{" "}
-              <span
-                onClick={() => setState("Sign Up")}
-                className="text-primary underline cursor-pointer"
-              >
-                Sign Up here
-              </span>
-            </>
-          )}
-        </p>
+        {mode === "signup" ? (
+          <p>
+            Already have an account?{" "}
+            <span
+              onClick={() => setMode("login")}
+              className="text-primary underline cursor-pointer"
+            >
+              Login here
+            </span>
+          </p>
+        ) : (
+          <p>
+            Create a new account?{" "}
+            <span
+              onClick={() => setMode("signup")}
+              className="text-primary underline cursor-pointer"
+            >
+              Click here
+            </span>
+          </p>
+        )}
       </div>
     </form>
   );
